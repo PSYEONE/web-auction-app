@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import include, path
 from django.http import HttpResponse
 
-from .views import main_spa
+from .views import main_spa, signup_api, login_api
 
 urlpatterns = [
     path('', main_spa),
+    path('api/signup/', signup_api, name="signup_api"),
+    path('api/login/', login_api, name="login_api")
 ]
