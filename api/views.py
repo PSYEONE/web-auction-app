@@ -15,6 +15,9 @@ from typing import Any, TypedDict, cast
 
 from .models import User
 
+def main_spa(request: HttpRequest) -> HttpResponse:
+    return render(request, 'api/spa/index.html', {})
+
 # USER VIEWS
 class SignupPayload(TypedDict, total=False):
     email: str
@@ -44,10 +47,10 @@ def login_api(request: HttpRequest) -> JsonResponse:
     user = authenticate(request, username=username, password=password)
 
     if user is None:
-        return JsonResponse({"success": False, "message": "Invalid username or password"}, status=401)
+        return JsonResponse({"success": False, "message": "Invalid username or password."}, status=401)
 
     login(request, user)
-    return JsonResponse({"success": True, "message": "Logged in!"})
+    return JsonResponse({"success": True, "message": "Logged in successfully."})
 
 @require_POST
 def signup_api(request: HttpRequest) -> JsonResponse:
@@ -85,7 +88,7 @@ def signup_api(request: HttpRequest) -> JsonResponse:
 
     # Limit the username to 3-30 characters
     if not (3 <= len(username) <= 30):
-        return JsonResponse({"success": False, "message": "Username must be between 3 and 30 characters"}, status=400)
+        return JsonResponse({"success": False, "message": "Username must be between 3 and 30 characters."}, status=400)
 
     # Validate username to check if it exists already
     if User.objects.filter(username__iexact=username).exists():
@@ -99,7 +102,13 @@ def signup_api(request: HttpRequest) -> JsonResponse:
 
     user = User.objects.create_user(username=username, email=email, password=password, date_of_birth=dob)
 
-    return JsonResponse({"success": True, "message": "Account created successfully!"})
+    return JsonResponse({"success": True, "message": "Account created successfully."})
 
-def main_spa(request: HttpRequest) -> HttpResponse:
-    return render(request, 'api/spa/index.html', {})
+@require_POST
+def logout_api(request: HttpRequest) -> JsonResponse:
+    """Log out the current user."""
+    if not request.user.is_authenticated:
+        return JsonResponse({'success': False, 'message': 'No user logged in.'}, status=400)
+
+    logout(request)
+    return JsonResponse({'success': True, 'message': "Logged out successfully."}, status=200)
