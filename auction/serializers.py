@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Item, Bid, Question
 from django.contrib.auth import get_user_model
 
-# Get the User model dynamically (from your 'api' folder)
+# Get the User model dynamically (from api)
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
@@ -42,7 +42,7 @@ class ReplySerializer(serializers.ModelSerializer):
 
 class ItemSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True) 
-    # Nesting serializers: When we fetch an item, we want to see the list of bids and questions too
+    # When we fetch an item, we want to see the list of bids and questions/answers
     bids = BidSerializer(many=True, read_only=True)
     questions = QuestionSerializer(many=True, read_only=True)
     
@@ -58,7 +58,6 @@ class ItemSerializer(serializers.ModelSerializer):
         read_only_fields = ['owner', 'is_active']
 
     def get_highest_bid(self, obj):
-        # Efficiently get the highest bid amount
+        # Get the highest bid amount
         highest = obj.bids.order_by('-amount').first()
-
         return highest.amount if highest else None
