@@ -34,6 +34,12 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ['id', 'item', 'author', 'question_text', 'timestamp', 'reply_text', 'reply_timestamp']
         read_only_fields = ['item', 'author', 'timestamp', 'reply_timestamp']
 
+class ReplySerializer(serializers.ModelSerializer):
+    """Serializer for the owner to update the reply_text"""
+    class Meta:
+        model = Question
+        fields = ['reply_text']
+
 class ItemSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True) 
     # Nesting serializers: When we fetch an item, we want to see the list of bids and questions too
@@ -54,4 +60,5 @@ class ItemSerializer(serializers.ModelSerializer):
     def get_highest_bid(self, obj):
         # Efficiently get the highest bid amount
         highest = obj.bids.order_by('-amount').first()
+
         return highest.amount if highest else None
