@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, status, filters
 from rest_framework.response import Response
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, PermissionDenied
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from .models import Item, Bid, Question
-from .serializers import ItemSerializer, BidSerializer, QuestionSerializer
+from .serializers import ItemSerializer, BidSerializer, QuestionSerializer, ReplySerializer
 
 # -------------------------------------------------------------------------
 # Custom Permissions
@@ -16,8 +16,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
     Custom permission to only allow owners of an object to edit it.
     """
     def has_object_permission(self, request, view, obj):
-        # Read permissions are allowed to any request,
-        # so we'll always allow GET, HEAD or OPTIONS requests.
+        # GET, HEAD or OPTIONS requests are read-only so allowed.
         if request.method in permissions.SAFE_METHODS:
             return True
         # Write permissions are only allowed to the owner of the snippet.
@@ -111,3 +110,21 @@ class PostQuestionView(generics.CreateAPIView):
     def perform_create(self, serializer):
         item = get_object_or_404(Item, id=self.kwargs['item_id'])
         serializer.save(author=self.request.user, item=item)
+
+class ReplyQuestionView(generics.UpdateAPIView):
+    """
+    PUT/PATCH: Reply to a question (Item owner only).
+    URL: /api/questions/<question_id>/reply/
+    """
+    queryset = Question.objects.all()
+    serializer_class = ReplySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, serializer):
+        question = self.get_object()
+        # Ensure only the item owner can reply
+        if question.item.owner != self.request.user:
+            raise PermissionDenied("You do not have permission to reply to this question.")
+        
+        # Save the reply and automatically set the timestamp
+        serializer.save(reply_timestamp=timezone.now())
