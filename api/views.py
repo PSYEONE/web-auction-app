@@ -25,9 +25,7 @@ class CustomLoginView(LoginView):
     authentication_form = LoginForm
     template_name = 'api/login.html'
     redirect_authenticated_user = True
-    
-    # Explicitly typing the return might be tricky with lazy objects, 
-    # but strictly it returns a string (URL).
+
     def get_success_url(self) -> str:
         return str(reverse_lazy('spa_home'))
 
@@ -44,8 +42,6 @@ class SignUpView(CreateView):
         """
         Handles valid form submission. 
         """
-        # We can optionally log the user in here if desired.
-        # For now, we stick to the default behavior: redirect to success_url (login).
         return super().form_valid(form)
 
 def logout_view(request: HttpRequest) -> HttpResponse:
