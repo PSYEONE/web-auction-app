@@ -4,6 +4,7 @@ from .views import (
     ItemDetailView, 
     PlaceBidView, 
     PostQuestionView
+    ReplyQuestionView
 )
 
 urlpatterns = [
@@ -18,4 +19,7 @@ urlpatterns = [
     
     # Ask a question
     path('items/<int:item_id>/question/', PostQuestionView.as_view(), name='post-question'),
+
+    # Reply to a question
+    path('questions/<int:pk>/reply/', ReplyQuestionView.as_view(), name='reply-question'),
 ]
