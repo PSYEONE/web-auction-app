@@ -9,6 +9,12 @@ from typing import Any
 
 from .forms import SignUpForm, LoginForm
 from .models import User
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.request import Request
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+from .serializers import UserProfileSerializer
 
 @login_required(login_url='login')
 def main_spa(request: HttpRequest) -> HttpResponse:
@@ -50,3 +56,26 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     """
     logout(request)
     return redirect('login')
+
+class UserProfileView(APIView):
+    """
+    API View to retrieve and update user profile.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request: Request) -> Response:
+        """
+        Return the current user's profile.
+        """
+        serializer = UserProfileSerializer(request.user)
+        return Response(serializer.data)
+
+    def put(self, request: Request) -> Response:
+        """
+        Update the current user's profile.
+        """
+        serializer = UserProfileSerializer(request.user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
