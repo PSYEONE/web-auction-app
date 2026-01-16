@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -61,7 +61,11 @@ MIDDLEWARE = [
 
 # CORS settings for dev
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # TODO: REMOVE FOR PRODUCTION
+    "https://group42-web-apps-ec23303.apps.a.comp-teach.qmul.ac.uk"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://group42-web-apps-ec23303.apps.a.comp-teach.qmul.ac.uk",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
