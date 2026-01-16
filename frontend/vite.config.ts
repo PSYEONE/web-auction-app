@@ -1,6 +1,9 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -17,5 +20,25 @@ export default defineConfig(({ mode }) => ({
         alias: {
             '@': path.resolve(__dirname, './src'),
         },
+    },
+    server: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+            },
+            '/login': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+            },
+            '/signup': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+            },
+            '/logout': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+            },
+        }
     },
 }));

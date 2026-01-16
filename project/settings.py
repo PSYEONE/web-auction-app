@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'auction',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+# CORS settings for dev
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # TODO: REMOVE FOR PRODUCTION
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'project.urls'
 

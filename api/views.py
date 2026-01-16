@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth import login, logout
@@ -35,6 +36,8 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
 
     def get_success_url(self) -> str:
+        if settings.DEBUG:
+            return 'http://localhost:5173/'
         return str(reverse_lazy('spa_home'))
 
 
