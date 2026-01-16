@@ -107,6 +107,14 @@ To run the tests:
    username: person5
    password: P4SSW0RD123
 
+3. Seller Inventory:
+
+   person1: Computer, item2
+   person2: item3, item4
+   person3: item5, item6
+   person4: item7, item8
+   person5: item9, item10
+
 ## License
 
 This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
