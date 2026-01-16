@@ -3,7 +3,7 @@ from .views import (
     ItemListCreateView, 
     ItemDetailView, 
     PlaceBidView, 
-    PostQuestionView
+    PostQuestionView,
     ReplyQuestionView
 )
 

@@ -16,6 +16,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .serializers import UserProfileSerializer
 
+
 @login_required(login_url='login')
 def main_spa(request: HttpRequest) -> HttpResponse:
     """
@@ -23,6 +24,7 @@ def main_spa(request: HttpRequest) -> HttpResponse:
     Requires the user to be logged in.
     """
     return render(request, 'api/spa/index.html', {})
+
 
 class CustomLoginView(LoginView):
     """
@@ -34,6 +36,7 @@ class CustomLoginView(LoginView):
 
     def get_success_url(self) -> str:
         return str(reverse_lazy('spa_home'))
+
 
 class SignUpView(CreateView):
     """
@@ -50,12 +53,14 @@ class SignUpView(CreateView):
         """
         return super().form_valid(form)
 
+
 def logout_view(request: HttpRequest) -> HttpResponse:
     """
     Logs out the user and redirects to login.
     """
     logout(request)
     return redirect('login')
+
 
 class UserProfileView(APIView):
     """

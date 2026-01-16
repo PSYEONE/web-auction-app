@@ -3,12 +3,13 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from auction.models import Item
 
+
 class Command(BaseCommand):
     help = 'Closes expired auctions and sends emails to winners'
 
     def handle(self, *args, **options):
         now = timezone.now()
-        
+
         # 1. Find active items where the end_date has passed
         expired_items = Item.objects.filter(is_active=True, end_date__lte=now)
 
@@ -28,8 +29,9 @@ class Command(BaseCommand):
                 try:
                     send_mail(
                         subject=f'You won the auction: {item.title}',
-                        message=f'Congratulations! You had the highest bid of £{highest_bid.amount}. Please proceed to payment.',
-                        from_email='your_group_email@gmail.com', # Replace this later
+                        message=f'Congratulations! You had the highest bid of £{highest_bid.amount}. Please proceed '
+                                f'to payment.',
+                        from_email='your_group_email@gmail.com',  # Replace this later
                         recipient_list=[winner.email],
                         fail_silently=False,
                     )

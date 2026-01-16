@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
+
 class Item(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='items', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='items/')
@@ -16,11 +17,13 @@ class Item(models.Model):
     def is_expired(self) -> bool:
         return timezone.now() > self.end_date
 
+
 class Bid(models.Model):
     item = models.ForeignKey(Item, related_name='bids', on_delete=models.CASCADE)
     bidder = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='bids', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
+
 
 class Question(models.Model):
     item = models.ForeignKey(Item, related_name='questions', on_delete=models.CASCADE)

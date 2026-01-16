@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from .models import Item, Bid, Question
 from .serializers import ItemSerializer, BidSerializer, QuestionSerializer, ReplySerializer
 
+
 # -------------------------------------------------------------------------
 # Custom Permissions
 # -------------------------------------------------------------------------
@@ -15,12 +16,14 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Custom permission to only allow owners of an object to edit it.
     """
+
     def has_object_permission(self, request, view, obj):
         # GET, HEAD or OPTIONS requests are read-only so allowed.
         if request.method in permissions.SAFE_METHODS:
             return True
         # Write permissions are only allowed to the owner of the snippet.
         return obj.owner == request.user
+
 
 # -------------------------------------------------------------------------
 # Item Views (List, Search, Create, Retrieve)
@@ -33,7 +36,7 @@ class ItemListCreateView(generics.ListCreateAPIView):
     """
     serializer_class = ItemSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    
+
     # Enable Searching
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'description']
@@ -46,6 +49,7 @@ class ItemListCreateView(generics.ListCreateAPIView):
         # Automatically set the owner to the logged-in user
         serializer.save(owner=self.request.user)
 
+
 class ItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     GET: Retrieve specific item details
@@ -55,6 +59,7 @@ class ItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
 
 # -------------------------------------------------------------------------
 # Bidding View
@@ -71,7 +76,7 @@ class PlaceBidView(generics.CreateAPIView):
     def perform_create(self, serializer):
         item_id = self.kwargs['item_id']
         item = get_object_or_404(Item, id=item_id)
-        
+
         # 1. Check if auction is active/not expired
         if not item.is_active or item.is_expired():
             raise ValidationError("This auction has ended.")
@@ -82,7 +87,7 @@ class PlaceBidView(generics.CreateAPIView):
 
         # 3. Check bid amount logic
         bid_amount = serializer.validated_data['amount']
-        
+
         # Check against starting price
         if bid_amount < item.starting_price:
             raise ValidationError(f"Bid must be at least {item.starting_price}")
@@ -94,6 +99,7 @@ class PlaceBidView(generics.CreateAPIView):
 
         # If all checks pass, save the bid
         serializer.save(bidder=self.request.user, item=item)
+
 
 # -------------------------------------------------------------------------
 # Question & Reply Views
@@ -111,6 +117,7 @@ class PostQuestionView(generics.CreateAPIView):
         item = get_object_or_404(Item, id=self.kwargs['item_id'])
         serializer.save(author=self.request.user, item=item)
 
+
 class ReplyQuestionView(generics.UpdateAPIView):
     """
     PUT/PATCH: Reply to a question (Item owner only).
@@ -125,6 +132,6 @@ class ReplyQuestionView(generics.UpdateAPIView):
         # Ensure only the item owner can reply
         if question.item.owner != self.request.user:
             raise PermissionDenied("You do not have permission to reply to this question.")
-        
+
         # Save the reply and automatically set the timestamp
         serializer.save(reply_timestamp=timezone.now())
