@@ -3,7 +3,7 @@
     <div class="window-title">{{ item.title }}</div>
     <div class="window-body">
       <img
-          :src="item.image"
+          :src="`/media/${item.image}`"
           :alt="item.title"
           class="item-image"
       />

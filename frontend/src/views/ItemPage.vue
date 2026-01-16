@@ -15,7 +15,7 @@
         <div class="window-title">{{ item.title }}</div>
         <div class="window-body">
           <div class="item-layout">
-            <img :src="item.image" :alt="item.title" class="item-image" />
+            <img :src="`/media/${item.image}`" :alt="item.title" class="item-image" />
             <div class="item-details">
               <p><strong>Owner:</strong> {{ item.owner.username }}</p>
               <p><strong>Description:</strong></p>

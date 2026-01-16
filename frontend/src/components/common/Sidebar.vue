@@ -7,7 +7,7 @@
         <div v-if="userStore.profile">
           <img
               v-if="userStore.profile.profile_image"
-              :src="userStore.profile.profile_image"
+              :src="`/media/${userStore.profile.profile_image}`"
               alt="Profile"
               class="profile-img"
           />
