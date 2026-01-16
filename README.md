@@ -4,9 +4,9 @@ This template should be used as the starting point for your group coursework in 
 
 ## Contributing Members
 
-Christopher John Ioannou - OpenShift Deployment, User Authentication, User Profile APIs
-Onais-Ur-Rehman Khan - Custom User Model, Auction Model, Auction APIs, Email Notifications
-Erhan Tibet Unal - Complete Frontend, Comment updates
+- Christopher John Ioannou - OpenShift Deployment, User Authentication, User Profile APIs
+- Onais-Ur-Rehman Khan - Custom User Model, Auction Model, Auction APIs, Email Notifications
+- Erhan Tibet Unal - Complete Frontend, Comment updates
 
 ## Local development
 
@@ -87,33 +87,33 @@ To run the tests:
 
 1. Super User:
 
-   username: admin
-   password: P4SSW0RD123
+   - username: admin
+   - password: P4SSW0RD123
 
 2. Test Users:
 
-   username: person1
-   password: P4SSW0RD123
+   - username: person1
+   - password: P4SSW0RD123
 
-   username: person2
-   password: P4SSW0RD123
+   - username: person2
+   - password: P4SSW0RD123
 
-   username: person3
-   password: P4SSW0RD123
+   - username: person3
+   - password: P4SSW0RD123
 
-   username: person4
-   password: P4SSW0RD123
+   - username: person4
+   - password: P4SSW0RD123
 
-   username: person5
-   password: P4SSW0RD123
+   - username: person5
+   - password: P4SSW0RD123
 
 3. Seller Inventory:
 
-   person1: Computer, item2
-   person2: item3, item4
-   person3: item5, item6
-   person4: item7, item8
-   person5: item9, item10
+   - person1: Computer, item2
+   - person2: item3, item4
+   - person3: item5, item6
+   - person4: item7, item8
+   - person5: item9, item10
 
 ## License
 
