@@ -73,9 +73,9 @@ The project includes automated tests for models, views and business logic.
 
 To run the tests:
 
-    ```console
+   ```console
     $ python manage.py close_auctions
-    ```
+   ```
 
 ## License
 
