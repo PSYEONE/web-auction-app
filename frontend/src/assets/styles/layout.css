@@ -1,7 +1,6 @@
 /* App Layout */
 .app-container {
     display: flex;
-    flex-direction: column;
     min-height: 100vh;
 }
 
@@ -16,32 +15,6 @@
 }
 
 .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.taskbar {
-    background: var(--win-gray);
-    border-bottom: 2px solid var(--win-dark-gray);
-    padding: 4px 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 32px;
-    box-shadow: inset 0 -1px 0 var(--win-white);
-}
-
-.taskbar-left {
-    display: flex;
-    align-items: center;
-}
-
-.taskbar-right {
-    font-size: 12px;
-}
-
-.content-area {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
@@ -72,8 +45,13 @@
 }
 
 /* Responsive */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .app-container {
-        flex-direction: row;
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
     }
 }

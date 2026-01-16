@@ -52,7 +52,7 @@ export default defineComponent({
     return {
       itemsStore: useItemsStore(),
       searchQuery: '',
-      searchTimeout: null as number | null,
+      searchTimeout: undefined as number | undefined,
     };
   },
   mounted() {
@@ -63,7 +63,7 @@ export default defineComponent({
       if (this.searchTimeout) {
         clearTimeout(this.searchTimeout);
       }
-      this.searchTimeout = setTimeout(() => {
+      this.searchTimeout = window.setTimeout(() => {
         this.itemsStore.fetchItems(this.searchQuery || undefined);
       }, 300);
     },

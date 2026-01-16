@@ -47,6 +47,14 @@
         </button>
         <button
             class="btn-retro"
+            style="width: 100%; margin-bottom: 8px;"
+            @click="$emit('go-to-my-auctions')"
+            :disabled="!userStore.profile"
+        >
+          My Auctions
+        </button>
+        <button
+            class="btn-retro"
             style="width: 100%;"
             @click="$emit('go-to-create')"
             :disabled="!userStore.profile"
@@ -55,20 +63,38 @@
         </button>
       </div>
     </div>
+
+    <div class="window" style="margin-top: 16px;">
+      <div class="window-title">Time</div>
+      <div class="window-body" style="text-align: center; font-size: 12px;">
+        {{ currentTime }}
+      </div>
+    </div>
   </aside>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useUserStore } from "../../stores/user.ts";
+import { useUserStore } from '../../stores/user';
 
 export default defineComponent({
   name: 'Sidebar',
-  emits: ['go-to-home', 'go-to-profile', 'go-to-create', 'go-to-login', 'go-to-signup', 'logout'],
+  emits: ['go-to-home', 'go-to-my-auctions', 'go-to-profile', 'go-to-create', 'go-to-login', 'go-to-signup', 'logout'],
   data() {
     return {
       userStore: useUserStore(),
+      currentTime: '',
     };
+  },
+  mounted() {
+    this.updateTime();
+    setInterval(this.updateTime, 1000);
+  },
+  methods: {
+    updateTime(): void {
+      const now = new Date();
+      this.currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    },
   },
 });
 </script>
