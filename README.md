@@ -42,6 +42,13 @@ To run this project in your development machine, follow these steps:
 
 8. Open your browser and go to http://localhost:5173, you will be greeted with a template page.
 
+9. Closing Auctions (Cron Job)
+To process expired auctions and send emails to winners, run the custom management command:
+
+    ```console
+    $ python manage.py close_auctions
+    ```
+
 ## OpenShift deployment
 
 Once your project is ready to be deployed you will need to 'build' the Vue app and place it in Django's static folder.
@@ -58,7 +65,17 @@ Once your project is ready to be deployed you will need to 'build' the Vue app a
     $ npm run build-windows
     ```
 
-2. You should then follow the instruction on QM+ on how to deploy your app on EECS's OpenShift live server.
+2. Link to OpenShift Live Server: <https://group42-web-apps-ec23303.apps.a.comp-teach.qmul.ac.uk/>
+
+## Testing
+
+The project includes automated tests for models, views and business logic.
+
+To run the tests:
+
+    ```console
+    $ python manage.py close_auctions
+    ```
 
 ## License
 
