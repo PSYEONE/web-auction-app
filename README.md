@@ -83,6 +83,30 @@ To run the tests:
     $ python manage.py test
    ```
 
+## User Logins
+
+1. Super User:
+
+   username: admin
+   password: P4SSW0RD123
+
+2. Test Users:
+
+   username: person1
+   password: P4SSW0RD123
+
+   username: person2
+   password: P4SSW0RD123
+
+   username: person3
+   password: P4SSW0RD123
+
+   username: person4
+   password: P4SSW0RD123
+
+   username: person5
+   password: P4SSW0RD123
+
 ## License
 
 This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
