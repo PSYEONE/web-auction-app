@@ -127,11 +127,13 @@ class ReplyQuestionView(generics.UpdateAPIView):
     serializer_class = ReplySerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self, serializer):
-        question = self.get_object()
+    def get_object(self):
+        question = super().get_object()
         # Ensure only the item owner can reply
         if question.item.owner != self.request.user:
             raise PermissionDenied("You do not have permission to reply to this question.")
+        return question
 
+    def perform_update(self, serializer):
         # Save the reply and automatically set the timestamp
         serializer.save(reply_timestamp=timezone.now())
