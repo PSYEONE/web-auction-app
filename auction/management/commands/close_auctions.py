@@ -31,7 +31,7 @@ class Command(BaseCommand):
                         subject=f'You won the auction: {item.title}',
                         message=f'Congratulations! You had the highest bid of £{highest_bid.amount}. Please proceed '
                                 f'to payment.',
-                        from_email='your_group_email@gmail.com',  # Replace this later
+                        from_email='ecs639ugroup42@gmail.com', 
                         recipient_list=[winner.email],
                         fail_silently=False,
                     )
@@ -45,3 +45,4 @@ class Command(BaseCommand):
             # 4. Mark as inactive so we don't process it again
             item.is_active = False
             item.save()
+
