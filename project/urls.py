@@ -21,10 +21,14 @@ from django.http import HttpResponse
 
 
 urlpatterns = [
-    path('', include('api.urls')),
     path('health', lambda request: HttpResponse("OK")),
     path('admin/', admin.site.urls),
 ]
 
-# Serve media files (uploaded images) in all environments
+# Serve media files (uploaded images) - must come before catch-all
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Include api urls with catch-all (must be last)
+urlpatterns += [
+    path('', include('api.urls')),
+]
