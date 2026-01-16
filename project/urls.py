@@ -26,6 +26,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-# Serve media files (uploaded images)
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files (uploaded images) in all environments
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
