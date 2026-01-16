@@ -51,20 +51,28 @@
             </span>
           </div>
 
-          <div v-else-if="isOwner" style="margin-top: 8px;">
-            <form @submit.prevent="submitReply(question.id)">
-              <input
-                  v-model="replyTexts[question.id]"
-                  type="text"
-                  class="input-retro"
-                  placeholder="Type your reply..."
-                  style="margin-bottom: 4px;"
-                  required
-              />
-              <button type="submit" class="btn-retro" style="font-size: 12px;">
-                Reply
-              </button>
-            </form>
+          <div v-else style="margin-top: 8px;">
+            <div v-if="!currentUserId" style="color: var(--win-dark-gray); font-style: italic; font-size: 12px;">
+              <a href="/login/" style="color: blue;">Log in</a> to reply or ask questions
+            </div>
+            <div v-else-if="isOwner">
+              <form @submit.prevent="submitReply(question.id)">
+                <textarea
+                    v-model="replyTexts[question.id]"
+                    class="input-retro"
+                    placeholder="Type your reply as the item owner..."
+                    rows="2"
+                    style="resize: vertical; margin-bottom: 4px;"
+                    required
+                ></textarea>
+                <button type="submit" class="btn-retro" style="font-size: 12px;">
+                  Post Reply
+                </button>
+              </form>
+            </div>
+            <div v-else style="color: var(--win-dark-gray); font-style: italic; font-size: 12px;">
+              Awaiting owner's reply...
+            </div>
           </div>
         </div>
       </div>
