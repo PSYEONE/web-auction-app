@@ -2,6 +2,12 @@
 
 This template should be used as the starting point for your group coursework in the module Web Programming (at Queen Mary University of London). Use Git (github.qmul.ac.uk) to collaborate on the coursework with your group members. Module leader: Paulo Oliva <[p.oliva@qmul.ac.uk](mailto:p.oliva@qmul.ac.uk)>
 
+## Contributing Members
+
+Christopher John Ioannou - OpenShift Deployment, User Authentication, User Profile APIs
+Onais-Ur-Rehman Khan - Custom User Model, Auction Model, Auction APIs, Email Notifications
+Erhan Tibet Unal - Complete Frontend, Comment updates
+
 ## Local development
 
 To run this project in your development machine, follow these steps:
