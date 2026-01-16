@@ -4,7 +4,7 @@
       <div style="margin-bottom: 16px; text-align: center;">
         <img
             v-if="previewImage || profile.profile_image"
-            :src="previewImage || profile.profile_image || ''"
+            :src="previewImage || (profile.profile_image ? `/media/${profile.profile_image}` : '')"
             alt="Profile"
             style="width: 128px; height: 128px; border: 2px solid var(--win-black); object-fit: cover;"
         />
