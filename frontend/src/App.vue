@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
-    <Sidebar
+    <Taskbar
         @go-to-home="goToHome"
+        @go-to-my-auctions="goToMyAuctions"
         @go-to-profile="goToProfile"
         @go-to-create="goToCreate"
         @go-to-login="goToLogin"
@@ -10,10 +11,7 @@
     />
 
     <main class="main-content">
-      <Taskbar />
-      <div class="content-area">
-        <router-view />
-      </div>
+      <router-view />
     </main>
 
     <ErrorModal
@@ -29,7 +27,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useUserStore } from './stores/user';
-import Sidebar from './components/common/Sidebar.vue';
 import Taskbar from './components/common/Taskbar.vue';
 import ErrorModal from './components/common/ErrorModal.vue';
 import LoadingBar from './components/common/LoadingBar.vue';
@@ -37,7 +34,6 @@ import LoadingBar from './components/common/LoadingBar.vue';
 export default defineComponent({
   name: 'App',
   components: {
-    Sidebar,
     Taskbar,
     ErrorModal,
     LoadingBar,
@@ -60,6 +56,9 @@ export default defineComponent({
   methods: {
     goToHome(): void {
       this.$router.push('/');
+    },
+    goToMyAuctions(): void {
+      this.$router.push('/my-auctions');
     },
     goToProfile(): void {
       this.$router.push('/profile');

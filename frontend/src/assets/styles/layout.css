@@ -5,46 +5,132 @@
     min-height: 100vh;
 }
 
-.sidebar {
-    width: 250px;
-    flex-shrink: 0;
-    background: var(--win-gray);
-    border-right: 2px solid var(--win-dark-gray);
-    padding: 12px;
-    height: 100vh;
+.main-content {
+    flex: 1;
+    padding: 20px;
     overflow-y: auto;
 }
 
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
+/* Taskbar */
 .taskbar {
     background: var(--win-gray);
     border-bottom: 2px solid var(--win-dark-gray);
-    padding: 4px 12px;
+    padding: 2px 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 32px;
+    height: 40px;
     box-shadow: inset 0 -1px 0 var(--win-white);
+    position: relative;
 }
 
 .taskbar-left {
     display: flex;
     align-items: center;
+    position: relative;
+}
+
+.taskbar-center {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .taskbar-right {
     font-size: 12px;
+    padding: 4px 12px;
+    border: 1px solid;
+    border-color: var(--win-dark-gray) var(--win-white) var(--win-white) var(--win-dark-gray);
+    background: var(--win-gray);
 }
 
-.content-area {
+.start-button {
+    font-weight: bold;
+    min-width: 80px;
+    margin-right: 8px;
+}
+
+.taskbar-btn {
+    font-size: 12px;
+    padding: 4px 12px;
+}
+
+/* User Menu Dropdown */
+.user-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 2px;
+    min-width: 200px;
+    z-index: 1000;
+    animation: slideUp 0.15s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.user-menu-content {
+    padding: 8px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    background: var(--win-light-gray);
+    border: 1px solid var(--win-dark-gray);
+    margin-bottom: 8px;
+}
+
+.menu-profile-img {
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--win-black);
+    object-fit: cover;
+}
+
+.menu-profile-placeholder {
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--win-black);
+    background: var(--win-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: bold;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     flex: 1;
-    padding: 20px;
-    overflow-y: auto;
+}
+
+.menu-divider {
+    height: 2px;
+    background: var(--win-dark-gray);
+    margin: 8px 0;
+}
+
+.menu-item {
+    width: 100%;
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+.menu-item:last-child {
+    margin-bottom: 0;
 }
 
 /* Profile Images */
@@ -69,11 +155,4 @@
     font-weight: bold;
     margin: 0 auto;
     text-align: center;
-}
-
-/* Responsive */
-@media (min-width: 768px) {
-    .app-container {
-        flex-direction: row;
-    }
 }

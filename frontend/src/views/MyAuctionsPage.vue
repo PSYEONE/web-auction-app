@@ -1,20 +1,7 @@
 <template>
-  <div class="home">
-    <div class="window" style="margin-bottom: 20px;">
-      <div class="window-title">Search Auctions</div>
-      <div class="window-body">
-        <input
-            v-model="searchQuery"
-            @input="handleSearch"
-            class="input-retro"
-            type="text"
-            placeholder="Search by title or description..."
-        />
-      </div>
-    </div>
-
+  <div class="my-auctions">
     <div class="window">
-      <div class="window-title">Active Auctions ({{ itemsStore.items.length }})</div>
+      <div class="window-title">My Auctions ({{ myItems.length }})</div>
       <div class="window-body">
         <div v-if="itemsStore.loading" style="text-align: center; padding: 40px;">
           Loading...
@@ -22,12 +9,12 @@
         <div v-else-if="itemsStore.error" style="color: red; padding: 20px;">
           Error: {{ itemsStore.error }}
         </div>
-        <div v-else-if="itemsStore.items.length === 0" style="padding: 40px; text-align: center;">
-          No auctions found
+        <div v-else-if="myItems.length === 0" style="padding: 40px; text-align: center;">
+          You haven't created any auctions yet
         </div>
         <div v-else class="items-grid">
           <ItemCard
-              v-for="item in itemsStore.items"
+              v-for="item in myItems"
               :key="item.id"
               :item="item"
               @click="goToItem(item.id)"
@@ -41,32 +28,33 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useItemsStore } from '../stores/items';
+import { useUserStore } from '../stores/user';
 import ItemCard from '../components/auction/ItemCard.vue';
+import type { Item } from '../types/models';
 
 export default defineComponent({
-  name: 'Home',
+  name: 'MyAuctionsPage',
   components: {
     ItemCard,
   },
   data() {
     return {
       itemsStore: useItemsStore(),
-      searchQuery: '',
-      searchTimeout: undefined as number | undefined,
+      userStore: useUserStore(),
     };
+  },
+  computed: {
+    myItems(): Item[] {
+      if (!this.userStore.profile) return [];
+      return this.itemsStore.items.filter(
+          item => item.owner.id === this.userStore.profile!.id
+      );
+    },
   },
   mounted() {
     this.itemsStore.fetchItems();
   },
   methods: {
-    handleSearch(): void {
-      if (this.searchTimeout) {
-        clearTimeout(this.searchTimeout);
-      }
-      this.searchTimeout = window.setTimeout(() => {
-        this.itemsStore.fetchItems(this.searchQuery || undefined);
-      }, 300);
-    },
     goToItem(id: number): void {
       this.$router.push(`/items/${id}`);
     },
